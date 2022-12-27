@@ -1,84 +1,82 @@
-var selectedRow = null;
+let submitBtn = document.getElementById("Submit");
 
-function onFormSubmit(e) {
-  event.preventDefault();
-  var formData = readFormData();
-  if (selectedRow == null) {
-    insertNewRecord(formData);
-  } else {
-    updateRecord(formData);
-  }
-  resetForm();
-}
-
-function readFormData() {
-    var formData = {};
-    formData["fullName"] = document.getElementById("fullName").value;
-    formData["city"] = document.getElementById("city").value;
-    formData["mobile"] = document.getElementById("mobile").value;
-    formData["email"] = document.getElementById("email").value;
-    formData["dob"] = document.getElementById("dob").value;
-    formData["gender"] = document.getElementById("gender").value;
-    formData["course"] = document.getElementById("course").value;
-  return formData;
+const info = {
+    student_name: '',
+    email: '',
+    phno: '',
+    dob: '',
+    gender: '',
+	collname:'',
+	branch:'',
+	url: '',
 }
 
-function insertNewRecord(data) {
-    var table = document.getElementById("studentList").getElementsByTagName('tbody')[0];
-    var newRow = table.insertRow(table.length);
-    cell1 = newRow.insertCell(0);
-    cell1.innerHTML = data.fullName;
-    cell2 = newRow.insertCell(1);
-    cell2.innerHTML = data.city;
-    cell3 = newRow.insertCell(2);
-    cell3.innerHTML = data.mobile;
-    cell4 = newRow.insertCell(3);
-    cell4.innerHTML = data.email;
-    cell5 = newRow.insertCell(4);
-    cell5.innerHTML = data.dob;
-    cell5 = newRow.insertCell(5);
-    cell5.innerHTML = data.gender;
-    cell6 = newRow.insertCell(6);
-    cell6.innerHTML = data.course;
-    cell4 = newRow.insertCell(7);
-    cell4.innerHTML = `<button onClick="onEdit(this)">Edit</button> <button onClick="onDelete(this)">Delete</button>`;
+const getData = () => {
+    info.student_name = document.getElementById('name').value;
+    info.email = document.getElementById('email').value;
+    info.phno = document.getElementById('phno').value;
+    info.dob = document.getElementById('dob').value;
+    info.gender = document.querySelector('input[name="male-female"]:checked').value;
+	info.collname = document.getElementById('college').value;
+    info.branch = document.querySelector('input[name="branches"]:checked').value;
+	info.url = document.getElementById('url').value;
+    if (localStorage.getItem("infoSection") === null) 
+	{
+        infoItem = [];
+    } 
+	else 
+	{
+        infoItem = JSON.parse(localStorage.getItem("infoSection"))
+    }
+    infoItem.push(info);
+    localStorage.setItem("infoSection", JSON.stringify(infoItem));
 }
 
-function onEdit(td) {
-    selectedRow = td.parentElement.parentElement;
-    document.getElementById("fullName").value = selectedRow.cells[0].innerHTML;
-    document.getElementById("city").value = selectedRow.cells[1].innerHTML;
-    document.getElementById("mobile").value = selectedRow.cells[2].innerHTML;
-    document.getElementById("email").value = selectedRow.cells[3].innerHTML;
-    document.getElementById("dob").value = selectedRow.cells[4].innerHTML;
-    document.getElementById("gender").value = selectedRow.cells[5].innerHTML;
-    document.getElementById("course").value = selectedRow.cells[6].innerHTML;
-}
-function updateRecord(formData) {
-    selectedRow.cells[0].innerHTML = formData.fullName;
-    selectedRow.cells[1].innerHTML = formData.city;
-    selectedRow.cells[2].innerHTML = formData.mobile;
-    selectedRow.cells[3].innerHTML = formData.email;
-    selectedRow.cells[4].innerHTML = formData.dob;
-    selectedRow.cells[5].innerHTML = formData.gender;
-    selectedRow.cells[6].innerHTML = formData.course;
+const showData = () => 
+{
+    let cardContainer = document.getElementById("cardContainer");
+
+    let cards = '';
+
+    let getLocalStorage = localStorage.getItem("infoSection");
+
+    if (getLocalStorage === null) {
+        console.log("null");
+    } else {
+        cardDivArr = JSON.parse(getLocalStorage);
+
+        cardDivArr.forEach((item, index) => {
+
+            cards += `<div class="card">
+            <img src=${item.url} alt="Profile Picture">
+            <div class="info">
+                <p><strong>Name</strong> : ${item.student_name}</p>
+                <p><strong>Email</strong> : ${item.email}</p>
+				<p><strong>Phone Number</strong> : ${item.phno}</p>
+                <p><strong>Date of Birth</strong> :${item.dob}</p>
+                <p><strong>Gender</strong> : ${item.gender}</p>
+				<p><strong>College Name</strong> : ${item.collname}</p>
+				<p><strong>Branch</strong> : ${item.branch}</p>
+                <button onclick="deleteData(${index})">Delete</button>
+            </div>
+        </div>`;
+        })
+    }
+    cardContainer.innerHTML = cards;
 }
 
-function onDelete(td) {
-  if (confirm("Do you want to delete this record?")) {
-    row = td.parentElement.parentElement;
-    document.getElementById("studentList").deleteRow(row.rowIndex);
-    resetForm();
-  }
+const deleteData = (index) => {
+    let getList = JSON.parse(localStorage.getItem("infoSection"));
+    getList.splice(index, 1);
+
+    localStorage.setItem("infoSection", JSON.stringify(getList));
+    window.location.reload();
 }
 
-function resetForm() {
-    document.getElementById("fullName").value = "";
-    document.getElementById("city").value = "";
-    document.getElementById("mobile").value = "";
-    document.getElementById("email").value = "";
-    document.getElementById("dob").value = "";
-    document.getElementById("gender").value = "";
-    document.getElementById("course").value = "";
-    selectedRow = null;
-}
+showData();
+
+submitBtn.addEventListener(('click'), () => {
+    getData();
+    showData();
+})
+Footer
