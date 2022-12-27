@@ -4,75 +4,67 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Registration Form</title>
     <link rel="stylesheet" href="style.css">
-    <script src="script.js" defer> </script>
-    <title>Student Profile System</title>
 </head>
 <body>
-    <h1>Student Profile System</h1>
-    <div class="container center">
-        <table>
-            <tr>
-                <td>
-                    <form class="input-part" autocomplete="off" onsubmit="onFormSubmit()">
-                        <div>
-                            <label>Full Name*:</label><label class="validation-error hide" id="fullNameValidationError">This field is required.</label>
-                            <input type="text" name="fullName" id="fullName">
-                        </div>
-                        <div>
-                            <label>City:</label>
-                            <input type="text" name="city" id="city">
-                        </div>
-                        <div>
-                            <label>Mobile No:</label>
-                            <input type="text" name="mobile" id="mobile">
-                        </div>
-                        <div>
-                            <label>Email Id:</label>
-                            <input type="text" name="email" id="email">
-                        </div>
-                        <div>
-                            <label>Dob:</label>
-                            <input type="text" name="dob" id="dob">
-                        </div>
-                        <div>
-                            <label>Gender:</label>
-                            <input type="text" name="gender" id="gender">
-                        </div>
-                        <div>
-                            <label>Course:</label>
-                            <input type="text" name="course" id="course">
-                        </div>
-    
-                        <div  class="form-action-buttons">
-                            <input type="submit" value="REGISTER">
-                        </div>
-    
-                    </form>
-
-                <td>
-                    <table class="list" id="studentList">
-                        <thead>
-                            <h2>Student Details</h2>
-                        <tr>
-                            <th>Full Name </th>
-                            <th>City </th>
-                            <th>Mobile No </th>
-                            <th>Email Id </th>
-                            <th>Dob </th>
-                            <th>Gender </th>
-                            <th>Course </th>
-                            <th></th>
-                        </tr>
-                        </thead>
-                        <tbody>
-
-                        </tbody>
-                    </table>
-                </td>
-                </td>
-            </tr>
-        </table>
+    <div class="header">
+        <h1>Student Registration Form</h1>
+        <div class="container_left">
+            <div class="form">
+                <h2>Enrollment Form</h2>
+                <form>
+                    <div class="name">
+                        <label>Name :</label>
+                        <input type="text" id="name" placeholder="Enter your name" >
+                    </div>
+                    <div class="email">
+                        <label>Email :</label>
+                        <input type="email" id="email" placeholder="Enter your email" >
+                    </div>
+					<div class="Phone Number">
+                        <label>Phone Number :</label>
+                        <input type="text" id="phno" placeholder="Enter your phone number" maxlength="10" >
+                    </div>
+                    <div class="DOB">
+                        <label>Date of Birth :</label>
+                        <input type="date" id="dob" name="dob" >
+                    </div>
+                    <div class="gender">
+                        <label>Gender : </label>
+                        <input type="radio" name="male-female" id="male" value="Male" class="gender">Male
+                        <input type="radio" name="male-female" id="female" value="Female" class="gender">Female
+                    </div><br>
+					<div class="College Name">
+                        <label>College Name :</label>
+                        <input type="text" id="college" placeholder="Enter your College Name" >
+                    </div>
+					<div class="branch">
+                        <label>Branch :</label>
+                        <input type="radio" name="branches" value="CSE" id="CSE" class="branch">CSE
+                        <input type="radio" name="branches" value="IT" id="IT" class="branch">IT
+                        <input type="radio" name="branches" value="ECE" id="ECE" class="branch">ECE
+						<input type="radio" name="branches" value="EEE" id="EEE" class="branch">EEE
+						<input type="radio" name="branches" value="MECH" id="MECH" class="branch">MECH
+						<input type="radio" name="branches" value="CIVIL" id="CIVIL" class="branch">CIVIL
+                    </div>
+					<div class="Image">
+                        <label>Passport size Image :</label>
+						<input type="url" id="url"  placeholder="Image URL" required >
+                    </div><br>
+                    <div class="button">
+                        <button type="Submit" id="Submit">Submit</button>
+                        <button type="reset" id="reset">Reset</button>
+                    </div>
+                </form>
+            </div>
+            <div class="container_right">
+                <h2>Enrolled Student Details</h2>
+                <div class="cardContainer" id="cardContainer">
+                </div>
+            </div>
+        </div>
     </div>
+    <script src="script.js"></script>
 </body>
 </html>
